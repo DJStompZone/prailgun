@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "prailgun"
+version = "0.1.1"
+description = "A PR tool powered by Flask and OpenAI."
+authors = ["DJ Stomp <85457381+DJStompZone@users.noreply.github.com>"]
+readme = "README.md"
+include = [
+    { path = "app.py", format = ["sdist", "wheel"] },
+    { path = ".env.example", format = ["sdist", "wheel"] },
+    { path = "Dockerfile", format = ["sdist", "wheel"] },
+    { path = "docker-compose.yml", format = ["sdist", "wheel"] }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+flask = "^3.1.0"
+openai = "^1.55.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

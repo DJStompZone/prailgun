@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRailgun</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: grid;
+            place-items: center;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            width: 100%;
+            padding: 2rem 0;
+            background-color: #007acc;
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 1rem 0;
+            color: #007acc;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005f99;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        PRailgun
+    </header>
+    <main>
+        <h1>Generate Media Inquiry</h1>
+        <form id="pr-form">
+            <label for="client_name">Client Name:</label>
+            <input type="text" id="client_name" name="client_name" required>
+
+            <label for="dba">Doing Business As (DBA):</label>
+            <input type="text" id="dba" name="dba">
+
+            <label for="industry">Industry:</label>
+            <input type="text" id="industry" name="industry">
+
+            <label for="custom_instructions">Custom Instructions (max 250 characters):</label>
+            <textarea id="custom_instructions" name="custom_instructions" maxlength="250"></textarea>
+
+            <button type="submit">Generate Email</button>
+        </form>
+        <h2>Generated Inquiry:</h2>
+        <pre id="output"></pre>
+    </main>
+    <script>
+        document.getElementById('pr-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('/generate', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('output').innerText = result.email || result.error;
+        });
+    </script>
+</body>
+</html>
